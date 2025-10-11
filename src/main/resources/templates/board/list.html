@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: white;
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+        
+        thead {
+            background-color: #333;
+        }
+        
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9em;
+        }
+        
+        th:first-child {
+            border-top-left-radius: 10px;
+        }
+        
+        th:last-child {
+            border-top-right-radius: 10px;
+        }
+        
+        td {
+            padding: 15px;
+            text-align: left;
+            color: #333;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        tbody tr {
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+        
+        tbody tr:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.01);
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+        
+        tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        /* 번호 컬럼 스타일 */
+        td:first-child {
+            font-weight: 700;
+            color: #000;
+            width: 80px;
+            text-align: center;
+        }
+        
+        /* 제목 컬럼 스타일 */
+        td:nth-child(2) {
+            font-weight: 600;
+            color: #000;
+        }
+        
+        /* 작성자 컬럼 스타일 */
+        td:nth-child(3) {
+            width: 150px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        /* 작성일 컬럼 스타일 */
+        td:nth-child(4) {
+            width: 180px;
+            color: #555;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        /* 글쓰기 버튼 스타일 */
+        .write-btn-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .btn-write {
+            padding: 12px 25px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-write:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+        }
+        
+        /* 제목 링크 스타일 */
+        .title-link {
+            color: #000;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .title-link:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 게시판</h1>
+        
+        <div class="write-btn-container">
+            <a href="/boards/write" class="btn-write">✍️ 글쓰기</a>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="board : ${boards}">
+                    <td th:text="${board.id}"></td>
+                    <td>
+                        <a th:href="@{/boards/{id}(id=${board.id})}" class="title-link" th:text="${board.title}"></a>
+                    </td>
+                    <td th:text="${board.author}"></td>
+                    <td th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(boards)}">
+                    <td colspan="4" class="empty-message">게시글이 없습니다.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
