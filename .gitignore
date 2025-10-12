@@ -31,12 +31,8 @@ build/
 ### VS Code ###
 .vscode/
 
-### Application Logs ###
-*.log
-app.log
-app-error.log
+### MacOS ###
+.DS_Store
 
-### H2 Database ###
-data/
-*.db
-*.trace.db
+### Windows ###
+Thumbs.db

@@ -1,8 +1,0 @@
-name: spring-board
-app: java@17
-
-context:
-  git:
-    url: git@github.com:qnzjn123/qnzjn99.git
-    ref: main
-  preset: springboot
