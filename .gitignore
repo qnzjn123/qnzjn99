@@ -30,3 +30,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Application Logs ###
+*.log
+app.log
+app-error.log
+
+### H2 Database ###
+data/
+*.db
+*.trace.db
